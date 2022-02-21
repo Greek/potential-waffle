@@ -1,6 +1,6 @@
-require('dotenv').config()
+require("dotenv").config();
 import Discord from "discord.js";
-import { RESTPutAPIApplicationCommandsJSONBody, Routes } from "discord-api-types/v9"; // version has to be specified :(
+import { Routes } from "discord-api-types/v9"; // version has to be specified :(
 import { REST } from "@discordjs/rest";
 
 export default class Client extends Discord.Client {
@@ -11,7 +11,9 @@ export default class Client extends Discord.Client {
 
   registerCommands(cmds: Array<unknown>) {
     const commands = cmds;
-    const rest = new REST().setToken(`${process.env.DISCORD_TOKEN}`);
+    const rest = new REST({ version: "9" }).setToken(
+      `${process.env.DISCORD_TOKEN}`
+    );
 
     rest
       .put(
@@ -22,7 +24,7 @@ export default class Client extends Discord.Client {
         { body: commands }
       )
       .then((r) => {
-        console.log("Registered slash commands to guild")
+        console.log("Registered slash commands to guild");
       });
   }
 }
